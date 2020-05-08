@@ -1,0 +1,38 @@
+.content {
+    height: 100%;
+    background-image: url("../../../assets/img/6.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    font-family: "kiona";
+}
+.title {
+    font-family: "kiona";
+    font-size: 14px;
+    color: #fff;
+}
+.icon {
+    font-size: 14px;
+    position: relative;
+    float: right;
+    padding-top: 5px;
+    color: #fff;
+}
+ion-row,
+ion-col {
+    padding: 0px;
+    margin: 0px;
+}
+ion-card {
+    margin-bottom: 0px;
+}
+.favorite-btn {
+    margin: 5% auto;
+    color: #fff;
+    --background-focused: #fff;
+    --border-color: #fff;
+    display: block;
+    padding: 0 30%;
+    outline: #fff;
+    font-family: "kiona";
+}

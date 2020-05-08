@@ -1,5 +1,7 @@
 {
   "name": "bellarena",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

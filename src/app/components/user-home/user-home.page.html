@@ -1,0 +1,36 @@
+<ion-content class="content">
+    <div *ngIf='favoritesAdded==0'>
+        <ion-grid>
+            <ion-row>
+                <ion-col size=6 *ngFor='let item of itemsFavorite'>
+                    <ion-card class="ion-activatable" padding>
+                        <img src='../../../assets/img/favorite/{{item["itemImage"]}}'>
+                        <span class="title">{{item["itemName"]}}</span>
+                        <ion-icon name="heart-circle-outline" class="icon" *ngIf="addedFavorites.includes(item['id'])"
+                            (click)='favRemoved(item["id"])'></ion-icon>
+                        <ion-icon name="heart-outline" class="icon" *ngIf="!addedFavorites.includes(item['id'])"
+                            (click)='favAdded(item["id"])'></ion-icon>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-button fill='outline' class='favorite-btn' *ngIf="addedFavorites.length>=3" (click)='addUserFav()'>Add
+            Favorites</ion-button>
+    </div>
+    <div *ngId='favoritesAdded==0'>
+        <ion-grid>
+            <ion-row>
+                <ion-col size=6 *ngFor='let item of itemsFavorite'>
+                    <ion-card class="ion-activatable" padding>
+                        <img src='../../../assets/img/favorite/{{item["itemImage"]}}'>
+                        <span class="title">{{item["itemName"]}}</span>
+                        <ion-icon name="heart-circle-outline" class="icon" *ngIf="addedFavorites.includes(item['id'])"
+                            (click)='favRemoved(item["id"])'></ion-icon>
+                        <ion-icon name="heart-outline" class="icon" *ngIf="!addedFavorites.includes(item['id'])"
+                            (click)='favAdded(item["id"])'></ion-icon>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>
