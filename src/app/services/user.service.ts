@@ -14,16 +14,17 @@ export class UserService {
     'Authorization': 'Bearer ' + localStorage.getItem('token')
   });
   private jwtHelper = new JwtHelperService();
+  private BACKEND_URL = 'http://35.226.251.116:8080/';
 
   constructor(private http: HttpClient) { }
 
   public login(email, password) {
     // tslint:disable-next-line:object-literal-key-quotes
-    return this.http.post('http://localhost:8080/user/login', { 'email': email, 'password': password }).pipe(map(res => res));
+    return this.http.post(this.BACKEND_URL + 'user/login', { 'email': email, 'password': password }).pipe(map(res => res));
   }
 
   public register(firstname, lastname, age, address, email, password) {
-    return this.http.post('http://localhost:8080/user/register',
+    return this.http.post(this.BACKEND_URL + 'user/register',
       // tslint:disable
       { 'firstname': firstname, 'lastname': lastname,'age':age, 'address': address, 'email': email, 'password': password }).pipe(map(res => res));
   }
@@ -39,25 +40,35 @@ export class UserService {
 
   public forgetPassword(email) {
     // tslint:disable-next-line:object-literal-key-quotes
-    return this.http.post('http://localhost:8080/user/forgetpassword', { 'email': email }).pipe(map(res => res));
+    return this.http.post(this.BACKEND_URL + 'user/forgetpassword', { 'email': email }).pipe(map(res => res));
   }
 
   public checkToken(email, token) {
     // tslint:disable-next-line:object-literal-key-quotes
-    return this.http.post('http://localhost:8080/user/forgetpassword/token', { 'email': email, 'token': token }).pipe(map(res => res));
+    return this.http.post(this.BACKEND_URL + 'user/forgetpassword/token', { 'email': email, 'token': token }).pipe(map(res => res));
   }
   public changePassword(email, password) {
-    return this.http.post('http://localhost:8080/user/forgetpassword/changepassword',
+    return this.http.post(this.BACKEND_URL + 'user/forgetpassword/changepassword',
       // tslint:disable-next-line:object-literal-key-quotes
       { 'email': email, 'password': password }).pipe(map(res => res));
   }
 
   public getItems() {
-    return this.http.get('http://localhost:8080/item/', { headers: this.headers }).pipe(map(res => res));
+    return this.http.get(this.BACKEND_URL + 'item/', { headers: this.headers }).pipe(map(res => res));
   }
 
   public addFavarites(id, fav) {
      // tslint:disable
-    return this.http.post('http://localhost:8080/item/favorite', { 'id': id, 'fav': fav }, { headers: this.headers }).pipe(map(res => res));
+    return this.http.post(this.BACKEND_URL + 'item/favorite', { 'id': id, 'fav': fav }, { headers: this.headers }).pipe(map(res => res));
+  }
+
+  public getRecommendedItems(id){
+    return this.http.post(this.BACKEND_URL + 'item/recommend',{'id':id},{headers:this.headers}).pipe(map(res=>res));
+  }
+  public getReviews(id){
+    return this.http.post(this.BACKEND_URL + 'item/reviews',{'id':id},{headers:this.headers}).pipe(map(res=>res));
+  }
+  public addReview(userid,clothid,stars,review,age){
+    return this.http.post(this.BACKEND_URL + 'item/addReview',{'userID':userid,'clothID':clothid,'stars':stars,'review':review,'age':age},{headers:this.headers}).pipe(map(res=>res));
   }
 }

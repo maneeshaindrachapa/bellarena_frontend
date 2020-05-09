@@ -17,17 +17,57 @@
         <ion-button fill='outline' class='favorite-btn' *ngIf="addedFavorites.length>=3" (click)='addUserFav()'>Add
             Favorites</ion-button>
     </div>
-    <div *ngId='favoritesAdded==0'>
+    <div *ngIf='favoritesAdded==1 && !addRecommendation'>
+        <button *ngIf="isLoading" ion-button full type="submit" class="btn btn-primary loading-btn" disabled>
+            <ion-spinner name="crescent" color="success"></ion-spinner>
+        </button>
         <ion-grid>
             <ion-row>
-                <ion-col size=6 *ngFor='let item of itemsFavorite'>
+                <ion-col size=6 *ngFor='let item of predictedResults;let i =index'>
                     <ion-card class="ion-activatable" padding>
-                        <img src='../../../assets/img/favorite/{{item["itemImage"]}}'>
-                        <span class="title">{{item["itemName"]}}</span>
-                        <ion-icon name="heart-circle-outline" class="icon" *ngIf="addedFavorites.includes(item['id'])"
-                            (click)='favRemoved(item["id"])'></ion-icon>
-                        <ion-icon name="heart-outline" class="icon" *ngIf="!addedFavorites.includes(item['id'])"
-                            (click)='favAdded(item["id"])'></ion-icon>
+                        <img [src]="imagesPredicted[i]">
+                        <span class="title">{{item["cloth_name"]}}</span>
+                        <ion-icon name="chatbubble-ellipses-outline" class="icon" (click)='addReviewOpen(item["id"])'>
+                        </ion-icon>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div *ngIf='favoritesAdded==1 && addRecommendation'>
+        <ion-row><ion-icon name="return-up-back-outline" class='btn-back' (click)='goBackToCloths()'></ion-icon></ion-row>
+        <form #recommendForm="ngForm">
+            <ion-row>
+                <ion-col>
+                    <input type="number" placeholder="Star Rating" name="stars" required id="stars"
+                        class="form-control credentials" [(ngModel)]="stars" min=0 max="5" />
+
+                    <input type="text" placeholder="Review" name="review" required id="review"
+                        class="form-control credentials" [(ngModel)]="review" />
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col class="signin-col">
+                    <button ion-button class="submit-btn" full type="submit" [disabled]="!recommendForm.form.valid"
+                        class="btn btn-primary credentials-btn" (click)="addReview()">
+                        Add Review
+                    </button>
+                </ion-col>
+            </ion-row>
+        </form>
+        <br>
+        <ion-grid>
+            <ion-row>
+                <hr>
+                <h4 class="title">Reviews</h4>
+                <hr>
+            </ion-row>
+            <ion-row>
+                <ion-col size=12 *ngFor='let review of reviewsOfCloth;let i =index'>
+                    <ion-card class="ion-activatable" padding>
+                        <ion-icon name="star" *ngFor='let i of [].constructor(review["rating"])' class="star-rating"></ion-icon>
+                        <h4 class="title">{{review["review_text"]}}</h4>
                     </ion-card>
                 </ion-col>
             </ion-row>
